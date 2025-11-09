@@ -567,8 +567,7 @@ export default function AnniversaryWebsite() {
                         Love Notes
                       </h3>
                       <p className="text-gray-600 mb-6">
-                        Click the button below to read sweet messages that
-                        express how much you mean to me 💕
+                        Messages that express how much you mean to me 💕
                       </p>
                     </div>
                     <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-xl p-6 mb-6 min-h-[300px] flex flex-col justify-center">
