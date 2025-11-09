@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Heart, Calendar, Sparkles, Camera, Award } from "lucide-react";
+import {
+  Heart,
+  Calendar,
+  Sparkles,
+  Camera,
+  Award,
+  BookHeart,
+} from "lucide-react";
 
 export default function AnniversaryWebsite() {
   const [currentSection, setCurrentSection] = useState("home");
@@ -9,8 +16,9 @@ export default function AnniversaryWebsite() {
   const [hasEntered, setHasEntered] = useState(false);
   const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 });
   const [showPetals, setShowPetals] = useState(false);
+  const [currentLoveNote, setCurrentLoveNote] = useState(0);
+  const [showHearts, setShowHearts] = useState(false);
 
-  // CUSTOMIZE: Add your photos/videos here (use image/video URLs)
   const photos = [
     {
       url: "https://files.catbox.moe/wd3pfj.jpg",
@@ -44,28 +52,27 @@ export default function AnniversaryWebsite() {
     },
   ];
 
-  // CUSTOMIZE: Add your memories here with photos
   const memories = [
     {
       month: "November 2024",
       title: "The Beginning",
       description: "The day we met and my world changed forever",
       color: "from-pink-400 to-rose-500",
-      image: "https://files.catbox.moe/dk17vg.png",
+      image: "https://files.catbox.moe/c3qxih.jpeg",
     },
     {
       month: "December 2024",
       title: "He fell in love",
       description: "you swept me off my feet and it felt amazing",
       color: "from-purple-400 to-pink-500",
-      image: "https://files.catbox.moe/4dkc1a.jpeg",
+      image: "https://files.catbox.moe/h3piqb.PNG",
     },
     {
       month: "February 2025",
       title: "Valentine's Day",
       description: "The most romantic day of my life",
       color: "from-red-400 to-pink-500",
-      image: "https://files.catbox.moe/7qo1oz.jpeg",
+      image: "https://files.catbox.moe/thqs8m.PNG",
     },
     {
       month: "May 2025",
@@ -73,7 +80,7 @@ export default function AnniversaryWebsite() {
       description:
         "Every flower a reminder that you deserve all the beauty in the world",
       color: "from-orange-400 to-rose-500",
-      image: "https://files.catbox.moe/h3piqb.PNG",
+      image: "https://files.catbox.moe/mbbkip.jpeg",
     },
     {
       month: "August 2025",
@@ -87,11 +94,29 @@ export default function AnniversaryWebsite() {
       title: "One Year",
       description: "Here's to forever with you",
       color: "from-pink-500 to-rose-600",
-      image: "https://files.catbox.moe/r25kau.JPG",
+      image: "https://files.catbox.moe/t7ird5.jpeg",
     },
   ];
 
-  // CUSTOMIZE: Add your quiz questions here
+  const loveNotes = [
+    {
+      text: "i love you\nenough to fight for you\ncompromise for you\nenough to miss you deeply\nno matter the length of time\nor how far apart we are\nenough to believe in our relationship\nto stand by your side\nto hold your hand through the ups and downs\nto have faith and strength in our relationship\nto never give up on you\ni love you enough to spend forever with you\neach day i fall more in love with you\nmaking me realize\nno amount of time is ever enough\nand even one day\nforever will run out\nbut i decided that will be fine\nbecause getting to love you is worth it",
+      author: "",
+    },
+    {
+      text: "at the end of the day\ni want it to be\nyou and me\n\ni want your early mornings\ni want your late nights\n\ni want you on your good days\neven more on your bad",
+      author: "",
+    },
+    {
+      text: "I don't know how to not miss you.\n\nIt seems that you have taken up a permanent residence in the place that used to be my heart,\n\nbut now is just a sea of thoughts about you.",
+      author: "",
+    },
+    {
+      text: "You have got the arms I want to be wrapped in.\nYou have got the eyes I want to get lost in.\nYou have got the smile I can never resist.\nYou have got the voice I want to listen to for hours.\nI decided on you, I want you and only you.",
+      author: "",
+    },
+  ];
+
   const quizQuestions = [
     {
       question: "Where was our first date?",
@@ -129,7 +154,6 @@ export default function AnniversaryWebsite() {
     if (selectedIndex === quizQuestions[currentQuestion].correct) {
       setQuizScore(quizScore + 1);
     }
-
     if (currentQuestion < quizQuestions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
@@ -151,10 +175,28 @@ export default function AnniversaryWebsite() {
 
   const handleYesClick = () => {
     setShowPetals(true);
-    setTimeout(() => {
-      setHasEntered(true);
-    }, 1000);
+    setTimeout(() => setHasEntered(true), 1000);
   };
+
+  const showNextLoveNote = () => {
+    setShowHearts(true);
+    setTimeout(() => setShowHearts(false), 2000);
+    setCurrentLoveNote((prev) => (prev + 1) % loveNotes.length);
+  };
+
+  const FallingHeart = ({ delay, startX }) => (
+    <div
+      className="absolute animate-fall"
+      style={{
+        left: `${startX}%`,
+        animationDelay: `${delay}s`,
+        animationDuration: "2s",
+        top: "-20px",
+      }}
+    >
+      <Heart className="text-red-500" size={30} fill="currentColor" />
+    </div>
+  );
 
   const Petal = ({ delay, duration, startX }) => (
     <div
@@ -189,10 +231,8 @@ export default function AnniversaryWebsite() {
       "left-center": "top-1/2 left-4 -translate-y-1/2",
       "right-center": "top-1/2 right-4 -translate-y-1/2",
     };
-
     const flowers = ["🌼", "🌻", "🌸", "💐", "🏵️"];
     const randomFlower = flowers[Math.floor(Math.random() * flowers.length)];
-
     return (
       <div
         className={`fixed ${positions[position]} pointer-events-none z-20 text-4xl opacity-60`}
@@ -225,14 +265,12 @@ export default function AnniversaryWebsite() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 relative overflow-hidden">
-      {/* Floating hearts background */}
       <div className="fixed inset-0 pointer-events-none">
         {[...Array(15)].map((_, i) => (
           <FloatingHeart key={i} delay={i * 0.5} />
         ))}
       </div>
 
-      {/* Lily petals animation - LOGIN PAGE ONLY */}
       {showPetals && !hasEntered && (
         <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
           {[...Array(40)].map((_, i) => (
@@ -246,7 +284,18 @@ export default function AnniversaryWebsite() {
         </div>
       )}
 
-      {/* Wildflower border decorations - ALL OTHER PAGES */}
+      {showHearts && (
+        <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
+          {[...Array(20)].map((_, i) => (
+            <FallingHeart
+              key={i}
+              delay={i * 0.1}
+              startX={Math.random() * 100}
+            />
+          ))}
+        </div>
+      )}
+
       {hasEntered && (
         <>
           {[
@@ -264,29 +313,13 @@ export default function AnniversaryWebsite() {
         </>
       )}
 
-      {/* Add keyframes for animations */}
       <style>{`
-        @keyframes fall {
-          to {
-            transform: translateY(100vh);
-          }
-        }
-        @keyframes spin {
-          to {
-            transform: rotate(360deg);
-          }
-        }
-        @keyframes fullSpin {
-          to {
-            transform: rotate(360deg);
-          }
-        }
-        .animate-fall {
-          animation: fall linear forwards;
-        }
+        @keyframes fall { to { transform: translateY(100vh); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes fullSpin { to { transform: rotate(360deg); } }
+        .animate-fall { animation: fall linear forwards; }
       `}</style>
 
-      {/* Login Page */}
       {!hasEntered ? (
         <div className="min-h-screen flex items-center justify-center p-4 relative z-10">
           <div className="max-w-md w-full bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl text-center">
@@ -301,7 +334,6 @@ export default function AnniversaryWebsite() {
             <p className="text-xl text-gray-700 mb-8">
               Would you like to see what I made for you?
             </p>
-
             <div className="flex gap-4 justify-center relative">
               <button
                 onClick={handleYesClick}
@@ -309,7 +341,6 @@ export default function AnniversaryWebsite() {
               >
                 Yes! 💖
               </button>
-
               <button
                 onMouseEnter={handleNoButton}
                 onTouchStart={handleNoButton}
@@ -330,7 +361,6 @@ export default function AnniversaryWebsite() {
                 No 😢
               </button>
             </div>
-
             <p className="text-sm text-gray-500 mt-6 italic">
               (Try clicking "No" if you dare... 😏)
             </p>
@@ -338,13 +368,17 @@ export default function AnniversaryWebsite() {
         </div>
       ) : (
         <>
-          {/* Navigation */}
           <nav className="relative z-10 bg-white/80 backdrop-blur-sm shadow-sm sticky top-0">
             <div className="container mx-auto px-4 py-4 flex justify-center gap-6 flex-wrap">
               {[
                 { id: "home", icon: Heart, label: "Home" },
                 { id: "gallery", icon: Camera, label: "Gallery" },
                 { id: "memories", icon: Calendar, label: "Memories" },
+                {
+                  id: "lovenotes",
+                  icon: BookHeart,
+                  label: "I Love My Girlfriend",
+                },
                 { id: "quiz", icon: Award, label: "Quiz" },
               ].map(({ id, icon: Icon, label }) => (
                 <button
@@ -364,7 +398,6 @@ export default function AnniversaryWebsite() {
           </nav>
 
           <div className="container mx-auto px-4 py-12 relative z-10">
-            {/* Home Section */}
             {currentSection === "home" && (
               <div className="max-w-3xl mx-auto text-center animate-fade-in">
                 <Sparkles className="mx-auto mb-6 text-pink-500" size={48} />
@@ -436,7 +469,6 @@ export default function AnniversaryWebsite() {
               </div>
             )}
 
-            {/* Gallery Section */}
             {currentSection === "gallery" && (
               <div className="max-w-5xl mx-auto">
                 <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
@@ -448,31 +480,12 @@ export default function AnniversaryWebsite() {
                       key={index}
                       className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
                     >
-                      {photo.type === "video" ? (
-                        <video
-                          src={photo.url}
-                          className="w-full h-64 object-cover"
-                          controls
-                          loop
-                          muted
-                          playsInline
-                          onError={(e) =>
-                            console.log("Video error:", photo.url)
-                          }
-                        />
-                      ) : (
-                        <img
-                          src={photo.url}
-                          alt={photo.caption}
-                          className="w-full h-64 object-cover"
-                          loading="lazy"
-                          onError={(e) => {
-                            console.error("Failed to load image:", photo.url);
-                            e.target.src =
-                              'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23f0f0f0" width="400" height="300"/%3E%3Ctext fill="%23999" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3EImage%3C/text%3E%3C/svg%3E';
-                          }}
-                        />
-                      )}
+                      <img
+                        src={photo.url}
+                        alt={photo.caption}
+                        className="w-full h-64 object-cover"
+                        loading="lazy"
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end pointer-events-none">
                         <p className="text-white p-4 font-medium">
                           {photo.caption}
@@ -484,7 +497,6 @@ export default function AnniversaryWebsite() {
               </div>
             )}
 
-            {/* Memories Timeline */}
             {currentSection === "memories" && (
               <div className="max-w-4xl mx-auto">
                 <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
@@ -531,13 +543,61 @@ export default function AnniversaryWebsite() {
               </div>
             )}
 
-            {/* Quiz Section */}
+            {currentSection === "lovenotes" && (
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+                  I Love My Girlfriend
+                </h2>
+                <div className="grid md:grid-cols-2 gap-8 mb-12">
+                  <div className="bg-white/60 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl">
+                    <img
+                      src="https://files.catbox.moe/78vdiq.jpeg"
+                      alt="My beautiful girlfriend"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-xl flex flex-col justify-center">
+                    <Heart
+                      className="mx-auto mb-4 text-rose-500"
+                      size={48}
+                      fill="currentColor"
+                    />
+                    <div className="text-center mb-6">
+                      <h3 className="text-3xl font-bold text-gray-800 mb-4">
+                        Love Notes
+                      </h3>
+                      <p className="text-gray-600 mb-6">
+                        Click the button below to read sweet messages that
+                        express how much you mean to me 💕
+                      </p>
+                    </div>
+                    <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-xl p-6 mb-6 min-h-[300px] flex flex-col justify-center">
+                      <p className="text-gray-800 text-lg leading-relaxed whitespace-pre-line text-center italic">
+                        {loveNotes[currentLoveNote].text}
+                      </p>
+                      {loveNotes[currentLoveNote].author && (
+                        <p className="text-gray-500 text-sm mt-4 text-right">
+                          - {loveNotes[currentLoveNote].author}
+                        </p>
+                      )}
+                    </div>
+                    <button
+                      onClick={showNextLoveNote}
+                      className="px-8 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full font-medium shadow-lg hover:shadow-xl transition-all transform hover:scale-105 flex items-center gap-2 justify-center"
+                    >
+                      <Heart size={20} fill="currentColor" />
+                      Read Another Love Note
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {currentSection === "quiz" && (
               <div className="max-w-2xl mx-auto">
                 <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
                   How Well Do You Know Us?
                 </h2>
-
                 {!quizComplete ? (
                   <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
                     <div className="mb-6">
@@ -560,11 +620,9 @@ export default function AnniversaryWebsite() {
                         />
                       </div>
                     </div>
-
                     <h3 className="text-2xl font-bold text-gray-800 mb-6">
                       {quizQuestions[currentQuestion].question}
                     </h3>
-
                     <div className="space-y-3">
                       {quizQuestions[currentQuestion].options.map(
                         (option, index) => (
