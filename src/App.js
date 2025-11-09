@@ -18,6 +18,7 @@ export default function AnniversaryWebsite() {
   const [showPetals, setShowPetals] = useState(false);
   const [currentLoveNote, setCurrentLoveNote] = useState(0);
   const [showHearts, setShowHearts] = useState(false);
+  const [audio] = useState(new Audio("https://files.catbox.moe/uo72e6.mp3"));
 
   const photos = [
     {
@@ -567,7 +568,8 @@ export default function AnniversaryWebsite() {
                         Love Notes
                       </h3>
                       <p className="text-gray-600 mb-6">
-                        Messages that express how much you mean to me 💕
+                        Click the button below to read sweet messages that
+                        express how much you mean to me 💕
                       </p>
                     </div>
                     <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-xl p-6 mb-6 min-h-[300px] flex flex-col justify-center">
